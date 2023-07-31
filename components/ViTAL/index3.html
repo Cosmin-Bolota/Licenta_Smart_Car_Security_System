@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> ViTAL </title>
+	
+	<style>
+		* {
+            padding: 0;
+			font-family: Arial, Helvetica, sans-serif;
+			color: #4B4B46;
+		}
+        
+		html, body {
+			margin: 0;
+			height: 100vh;
+			width: 100%;
+			background-color: rgb(255, 255, 255);
+			font-size: 15px;
+		}
+        
+		.header {
+            width: 100%;
+			height: 20vh;
+			background-color: rgb(240, 230,20);
+			text-align: center;
+		}
+		
+		.header-content {
+			color: #4B4B46;
+			padding-top: 3vh;
+			width: 100%;
+		}
+		
+		.header-content h2 {
+			font-size: 20px;
+		}
+		
+		.grid-container-main {
+			color: #4B4B46;
+			display: flex;
+			justify-content: center;
+			height: 80vh;
+			width: auto;
+			font-size: 15px;
+		}
+		
+		.grid-container-left {
+			display: flex;
+			flex-direction: column;
+			width: 50vw;
+		}
+		
+		.grid-container-right {
+			display: flex;
+			flex-direction: column;
+			width: 50vw;
+		}
+		
+		.grid-item-header {
+			margin-top: 15px ;
+			display: flex;
+			justify-content: center;
+			/* border-radius: 5px; */
+			/* padding: 25px 0; */
+			background-color:  rgb( 240, 230, 20);
+			font-size: 15px;
+		}
+		.grid-item{
+			display: flex;
+			justify-content: center;
+		}
+        
+        .temp-form-container {
+			margin: 15px ;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 5px;
+			/* padding: 25px 0; */
+			background-color:  rgb( 240, 230, 20);
+			font-size: 15px;
+		}
+		
+		.temp-form {
+			margin: 15px;
+			color: #4B4B46;
+			font-size: 15px;
+			font-weight: bold;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		
+		#user-temperature{
+			height: 20px;
+            width: 150px;
+            text-align: center;
+		}
+		
+		#temp-submit{
+			width: 80px;
+			padding: 3px 0;
+			color: #4B4B46;
+			font-size: 15px;
+			font-weight: bold;
+			margin-top: 0.5vh;
+		}
+		
+		.form-item {
+			margin: 15px;
+		}
+		
+		.buttonSubmit {
+			height: 100px;
+			width: 100px;
+			border-radius: 50%;
+			background-color: rgb(240, 230,20);
+			color: #4B4B46;
+			font-size: 15px;
+			font-weight: bold;
+			cursor: pointer;
+			border: none;
+			transition: ease 0.2s;
+		}
+		.buttonSubmit:hover {
+			background-color: rgb(240, 181, 20);
+			box-shadow: 0px 0px 10px 2px rgba(128, 128, 128, 0.253) ;
+		}
+		.status-container {
+			/* height: 50px; */
+			width: 50vw;
+			background-color: rgb(240, 230 , 20);
+			color: #818177;
+			border-radius: 15px;
+			margin:15px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		
+		.status-container p{
+			font-weight: bold;
+		}
+		
+			
+		@media only screen and (max-width: 600px) {
+			
+			.grid-container-main {
+				height: auto;
+				flex-direction: column;
+			}
+			.grid-container-left{
+				width: auto;
+			}
+			.grid-container-right{
+				width: auto;
+			}
+			.grid-item-header {
+				margin: 5px;
+			}
+            h2 {
+                font-size: 13px;
+            }
+            
+            h1 {
+                font-size: 23px;
+            }
+            
+            .buttonSubmit {
+                font-size: 15px;
+                height:120px;
+                width:120px;
+            }
+            
+            .status-container {
+                /* height: 80px; */
+                /* width: 90px; */
+                font-size: 18px;
+				margin:5px;
+            }
+		}
+	</style>
+</head>
+
+<body>
+	<div class= "header">
+		<div class="header-content">
+			<h1> Vitesco Technologies Automotive Laboratory </h1>
+			<h2> Smart car security system </h2>
+		</div>
+	</div>
+	
+	<div class="grid-container-main">
+		<div class="grid-container-left">
+			<div class="grid-item-header">
+				<h2> Remote Control/Command </h2>
+			</div>
+            
+            <!--  Form FAN -->
+			
+			<div class="grid-item">
+				<div class="form-item">
+					<button class="buttonSubmit" id="fanToggle" name="button"></button>
+				</div>
+				<div class="form-item">
+					<button class="buttonSubmit" id="trunkToggle" name="button"></button>
+				</div>
+			</div>
+			
+			<div class="grid-item">
+				<div class="form-item">
+					<button class="buttonSubmit" id="headlightsToggle" name="button"></button>
+				</div>
+				<div class="form-item">
+					<button class="buttonSubmit" id="ambilightToggle" name="button"></button>
+				</div>
+			</div>
+			
+			<div class="grid-item">
+				<div class="form-item">
+					<button class="buttonSubmit" id="findToggle" name="button"></button>
+				</div>
+				<div class="form-item">
+					<button class="buttonSubmit" id="honkControl" name="button"></button>
+				</div>
+			</div>
+
+			<div class="grid-item">
+				<div class="form-item">
+					<button class="buttonSubmit" id="securityToggle" name="button"></button>
+				</div>
+				<div class="form-item">
+					<button class="buttonSubmit" id="lockToggle" name="button"></button>
+				</div>
+			</div>
+		</div>
+
+		
+		<div class="grid-container-right">
+			
+			<div class="grid-item-header">
+				<h2> Information Display </h2>
+			</div>
+            
+            <div class="temp-form-container">
+				<form class="temp-form" method="post">
+					<label for="user-temperature">Enter your temperature threshold:</label><br>
+					<input type="number" id="user-temperature" name="user-temp" min="15" max="30" required><br>
+					<input id="temp-submit" type="submit" value="Apply">
+                </form>
+			</div>
+            
+            <!--  Temperature -->
+            
+            <div class="grid-item">
+				<div class="status-container">
+					<p id="humidity-level"> Humidity </p>
+					<p id="humidity-level">15%</p>
+				</div>
+				<div class="status-container">
+					<p id="heat-index"> Real feel </p>
+					<p id="humidity-level">15%</p>
+				</div>
+			</div>
+            
+            <div class="grid-item">
+				<div class="status-container">
+					<p id="photo-R-level"> Photo-R level </p>
+					<p id="humidity-level">15%</p>
+				</div>
+				<div class="status-container">
+					<p id="locked-unlocked-status"> Locked </p>
+					<p id="humidity-level">15%</p>
+				</div>
+			</div>
+            
+            <div class="grid-item">
+				<div class="status-container">
+					<p id="driver-seat-status"> Driver seat<br>unoccupied  </p>
+					<p id="humidity-level">15%</p>
+				</div>	
+			</div>
+		</div>
+	</div>
+	
+	<script>
+
+		let shadowOFF = "0px 0px 15px 5px rgba(252, 3, 3, 0.5)";
+		
+		function updateColors(element,state){
+			element.style.boxShadow = getItem(state) == 1 ? "" : shadowOFF;
+		}
+
+        /******************** Save/Load from localStorage functions ********************/
+		function setItem(name,value){
+			localStorage.setItem(name, value);
+		}
+		function getItem(name){
+			return localStorage.getItem(name);
+		}
+        /******************** POST functions ********************/
+
+        /********** FAN **********/
+
+		let fanControl = document.getElementById("fanToggle");
+		setItem("fanState",0);
+		fanControl.innerHTML = "Fan OFF"
+		updateColors(fanControl,"fanState");
+				
+		fanControl.onclick = function() {
+			setItem("fanState", getItem("fanState") == 0 ? 1 : 0 );
+			fanControl.innerHTML = getItem("fanState") == 1 ? "Fan ON" : "Fan OFF";
+			updateColors(fanControl,"fanState");
+		};
+        
+		/********** Trunk **********/
+
+		let trunkControl = document.getElementById("trunkToggle");
+		setItem("trunkState",0);
+		trunkControl.innerHTML = "Closed Trunk"
+		updateColors(trunkControl,"trunkState");
+				
+		trunkControl.onclick = function() {
+			setItem("trunkState", getItem("trunkState") == 0 ? 1 : 0 );
+			trunkControl.innerHTML = getItem("trunkState") == 1 ? "Trunk Opened" : "Trunk Closed";
+			updateColors(trunkControl,"trunkState");
+		};
+        
+        /********** Headlights **********/
+
+		let headlightsElement = document.getElementById("headlightsToggle");
+		setItem("headlightsState",0);
+		headlightsElement.innerHTML = "Headlights Off"
+		updateColors(headlightsElement,"headlightsState");
+				
+		headlightsElement.onclick = function() {
+			setItem("headlightsState", getItem("headlightsState") == 0 ? 1 : 0 );
+			headlightsElement.innerHTML = getItem("headlightsState") == 1 ? "Headlights On" : "Headlights Off";
+			updateColors(headlightsElement,"headlightsState");
+		};
+        
+        
+        /********** AMBIENTAL LIGHTS **********/
+		let ambilightElement = document.getElementById("ambilightToggle");
+		setItem("ambilightState",0);
+		ambilightElement.innerHTML = "Ambiental Lights Off"
+		updateColors(ambilightElement,"ambilightState");
+				
+		ambilightElement.onclick = function() {
+			setItem("ambilightState", getItem("ambilightState") == 0 ? 1 : 0 );
+			ambilightElement.innerHTML = getItem("ambilightState") == 1 ? "Ambiental Lights On" : "Ambiental Lights Off";
+			updateColors(ambilightElement,"ambilightState");
+		};
+        
+        /********** Find **********/
+		let findElement = document.getElementById("findToggle");
+		setItem("findState",0);
+		findElement.innerHTML = "Find My Car Off"
+		updateColors(findElement,"findState");
+				
+		findElement.onclick = function() {
+			setItem("findState", getItem("findState") == 0 ? 1 : 0 );
+			findElement.innerHTML = getItem("findState") == 1 ? "Find My Car On" : "Find My Car Off";
+			updateColors(findElement,"findState");
+		};
+		
+        /********** Honk **********/
+		let honkElement = document.getElementById("honkControl");
+		setItem("honkState",1);
+		honkElement.innerHTML = "Honk"
+		updateColors(honkElement,"honkState");
+				
+		honkElement.onclick = function() {
+			let request = new XMLHttpRequest();
+            
+            request.open('POST', '/index.html', true);
+            request.send(JSON.stringify({"horn":true}));
+
+			//Do someting!
+		};
+        
+        /********** Security **********/
+		let securityElement = document.getElementById("securityToggle");
+		setItem("securityState",0);
+		securityElement.innerHTML = "Security Off"
+		updateColors(securityElement,"securityState");
+				
+		securityElement.onclick = function() {
+			setItem("securityState", getItem("securityState") == 0 ? 1 : 0 );
+			securityElement.innerHTML = getItem("securityState") == 1 ? "Security On" : "Security Off";
+			updateColors(securityElement,"securityState");
+		};
+        
+        /********** Lock **********/
+		let lockElement = document.getElementById("lockToggle");
+		setItem("lockState",0);
+		lockElement.innerHTML = "Lock Off"
+		updateColors(lockElement,"lockState");
+				
+		lockElement.onclick = function() {
+			setItem("lockState", getItem("lockState") == 0 ? 1 : 0 );
+			lockElement.innerHTML = getItem("lockState") == 1 ? "Lock On" : "Lock Off";
+			updateColors(lockElement,"lockState");
+		};
+        
+        /******************** GET functions ********************/
+        let DataValue = ["", "", "", "", "", ""];
+        if (getItem("DataValue0") == null) setItem("DataValue0", DataValue[0]);
+        if (getItem("DataValue1") == null) setItem("DataValue1", DataValue[1]);
+        if (getItem("DataValue2") == null) setItem("DataValue2", DataValue[2]);
+        if (getItem("DataValue3") == null) setItem("DataValue3", DataValue[3]);
+        if (getItem("DataValue4") == null) setItem("DataValue4", DataValue[4]);
+        if (getItem("DataValue5") == null) setItem("DataValue5", DataValue[5]);
+        
+        /* Temperature GET here -> */
+        document.getElementById("humidity-level").innerHTML = "Humidity" + "<br>" + getItem("DataValue1") + "%";
+        document.getElementById("heat-index").innerHTML = "Real feel" + "<br>" + getItem("DataValue2") + "&degC";
+        document.getElementById("photo-R-level").innerHTML = "Photo-R level" + "<br>" + getItem("DataValue3");
+        document.getElementById("locked-unlocked-status").innerHTML = getItem("DataValue4");
+        document.getElementById("driver-seat-status").innerHTML = "Driver seat" + "<br>" + getItem("DataValue5");
+        
+        function readData() {
+            let request = new XMLHttpRequest();
+            
+            request.open('GET', '/data.txt', true);
+            request.send();
+
+			request.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+						console.log(this.response);
+                        DataValue = this.responseText.split('\n');
+                        setItem("DataValue0", DataValue[0]);
+                        setItem("DataValue1", DataValue[1]);
+                        setItem("DataValue2", DataValue[2]);
+                        setItem("DataValue3", DataValue[3]);
+                        setItem("DataValue4", DataValue[4]);
+                        setItem("DataValue5", DataValue[5]);
+
+						updateData();
+                    }
+                };
+		}
+        
+        function updateData() {
+            document.getElementById("temperature-level").innerHTML = "Temperature" + "<br>" + getItem("DataValue0") + "&degC";
+            document.getElementById("humidity-level").innerHTML = "Humidity" + "<br>" + getItem("DataValue1") + "%";
+            document.getElementById("heat-index").innerHTML = "Real feel" + "<br>" + getItem("DataValue2") + "&degC";
+            document.getElementById("photo-R-level").innerHTML = "Photo-R level" + "<br>" + getItem("DataValue3");
+            document.getElementById("locked-unlocked-status").innerHTML = getItem("DataValue4");
+            document.getElementById("driver-seat-status").innerHTML = "Driver seat" + "<br>" + getItem("DataValue5");
+        }
+        readData();
+        // setInterval(readData, 1000);
+		// setInterval(updateData,0)
+    </script>
+</body>
+</html>
