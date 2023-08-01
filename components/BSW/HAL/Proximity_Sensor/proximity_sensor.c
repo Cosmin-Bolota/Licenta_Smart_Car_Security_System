@@ -47,6 +47,7 @@ uint16_t PROX_u16Read(void)
 
 	while (GPIO_iGetLevel(HC_SR04_ECHO_PIN))
 		;
+	
 	g_GET_DataStructure.u8Distance = (((esp_timer_get_time() - echo_start) * 0.0343) / 2);
 	return (uint16_t) (((esp_timer_get_time() - echo_start) * 0.0343) / 2);
 }

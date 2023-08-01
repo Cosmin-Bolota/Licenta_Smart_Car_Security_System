@@ -69,9 +69,6 @@ void vTask200ms(void)
 	ASW_vTaskDCMdTest();
 	/* Call buzzer functionality */
 	ASW_vTaskBuzzerTest();
-	/* Call proximity sensor functionality */
-	PROX_u16Read();
-	
 }
 
 void vTask500ms(void)
@@ -82,6 +79,8 @@ void vTask500ms(void)
 	//ASW_vTaskServoTest();	//Trunk
 	ASW_vTaskBuzzerTest();	//Honk
 	ASW_vTaskDCMsTest();	//Fan
+	/* Call proximity sensor functionality */
+	PROX_u16Read();			//Distance
 }
 
 void vTask800ms(void)

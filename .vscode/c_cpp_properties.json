@@ -28,7 +28,7 @@
                 "D:/ESP32/esp-idf/components/esp_rom/include",
                 "D:/ESP32/esp-idf/components/esp_rom/include",
                 "D:/ESP32/esp-idf/components/newlib/platform_include",
-                "${workspaceFolder}/components/ViTAL/include",
+                "${workspaceFolder}/components/include",
                 "D:/ESP32/esp-idf/components/esp_event/include",
                 "D:/ESP32/esp-idf/components/esp_wifi/include"
             ],

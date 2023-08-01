@@ -18,7 +18,7 @@ void ASW_vTaskFindMyCar()
         
         RTE_vSetHeadlightsState(ON);
         RTE_vSetShiftRegisterOutput(ALL_COLORS, HIGH);
-        ESP_LOGI(TAG, "Security: ON");
+        ESP_LOGI(TAG, "Find my car: ON");
         ets_delay_us(8000);
     }
     else
@@ -37,14 +37,14 @@ void ASW_vTaskFindMyCar()
         {
             RTE_vSetShiftRegisterOutput(ALL_COLORS, LOW);
         }
-        ESP_LOGI(TAG, "Security: OFF");
+        ESP_LOGI(TAG, "Find my car: OFF");
     }
 }
 
 void ASW_vTaskCheckDriver()
 {
     RTE_vSet_Occupied(RTE_u16GetSavedDistance() < DISTANCE_THRESHOLD);
-    if(RTE_bGet_IsOccupied() && RTE_bGet_IsLocked())
+    if(RTE_bGet_IsOccupied() && RTE_bGet_ButtonSecurityStatus() && RTE_bGet_ButtonDoorLockStatus())
     {
         for(uint8_t var = 0; var<10; var++)
         {
@@ -68,7 +68,7 @@ void ASW_vTaskCheckDriver()
             vTaskDelay(200);
         }
     }
-    else if(!RTE_bGet_IsLocked())
+    else if(!RTE_bGet_ButtonSecurityStatus())
     {
         if(!RTE_bGetBuzzerStatus())
         {
