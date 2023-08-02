@@ -127,6 +127,7 @@ bool RTE_bGetBuzzerStatusSecurity(void);
 
 #define TRUNK_CLOSE 1500
 #define TRUNK_OPEN 2500
+#define TRUNK_LOCKED 550
 #define SERVO_MOTOR_0_DEG 550
 #define SERVO_MOTOR_90_DEG 1500
 #define SERVO_MOTOR_180_DEG 2500

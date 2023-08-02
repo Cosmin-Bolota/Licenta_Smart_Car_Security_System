@@ -63,29 +63,29 @@ void vTask200ms(void)
 {
 	/* Call RGB led functioality */
 	ASW_vTaskRGBLedControlTest();
-	/* Call DC motor in the Left side */
-	ASW_vTaskDCMsTest();
-	/* Call DC motor in the Right side */
-	ASW_vTaskDCMdTest();
 	/* Call buzzer functionality */
-	ASW_vTaskBuzzerTest();
+	//ASW_vTaskBuzzerTest();
 }
 
 void vTask500ms(void)
 {
-	/* Call Find my car functionality */
-	ASW_vTaskFindMyCar();
-
 	//ASW_vTaskServoTest();	//Trunk
 	ASW_vTaskBuzzerTest();	//Honk
-	ASW_vTaskDCMsTest();	//Fan
+	/* Call DC motor in the Left side */
+	ASW_vTaskDCMsTest();
+	/* Call DC motor in the Right side */
+	ASW_vTaskDCMdTest();
 	/* Call proximity sensor functionality */
 	PROX_u16Read();			//Distance
+
+	ASW_vTaskTrunkCheck();
 }
 
 void vTask800ms(void)
 {
 	ASW_vTaskAmbientalLight();
+	/* Call Find my car functionality */
+	ASW_vTaskFindMyCar();
 } 
 
 void vTask1000ms(void)
@@ -99,7 +99,6 @@ void vTask1000ms(void)
 
 void vTask2000ms(void)
 {
-	ASW_vTaskTrunkCheck();
 	/* Call CheckDriver seat  */
 	ASW_vTaskCheckDriver();
 }
@@ -113,43 +112,49 @@ void vTask5000ms(void)
 void SYSTEM_vTaskScheduler(void)
 {
 	uint16_t u16TickCount = 0;
-
 	while (1)
 	{
 
 		if (u16TickCount % TASK_100MS == 0)
 		{
 			vTask100ms();
+			vTaskDelay(5);
 		}
 
 		if (u16TickCount % TASK_200MS == 0)
 		{
-			vTask200ms();	
+			vTask200ms();
+			vTaskDelay(5);
 		}
 
 		if (u16TickCount % TASK_500MS == 0)
 		{
 			vTask500ms();	
+			vTaskDelay(5);
 		}
 		
 		if (u16TickCount % TASK_800MS == 0)
 		{
-			vTask800ms();	
+			vTask800ms();
+			vTaskDelay(5);
 		}
 
 		if (u16TickCount % TASK_1000MS == 0)
 		{
-			vTask1000ms();	
+			vTask1000ms();
+			vTaskDelay(5);	
 		}
 
 		if (u16TickCount % TASK_2000MS == 0)
 		{
 			vTask2000ms();	
+			vTaskDelay(5);
 		}
 
 		if (u16TickCount % TASK_5000MS == 0)
 		{
 			vTask5000ms();
+			vTaskDelay(5);
 		}
 
 		u16TickCount++;

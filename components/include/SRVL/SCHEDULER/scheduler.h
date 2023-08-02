@@ -16,7 +16,7 @@ void SYSTEM_vTaskScheduler(void);
 
 #define TASK_LOOP_FREQ 100
 
-#define TASK_100MS (150 / TASK_LOOP_FREQ)
+#define TASK_100MS (100 / TASK_LOOP_FREQ)
 #define TASK_200MS (200 / TASK_LOOP_FREQ)
 #define TASK_500MS (500 / TASK_LOOP_FREQ)
 #define TASK_800MS (800 / TASK_LOOP_FREQ)

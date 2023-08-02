@@ -28,7 +28,7 @@ void ASW_vTaskFindMyCar()
             BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
             RTE_vSetBuzzerOff();
         }
-        if(!RTE_bGet_ButtonHeadlightsStatus())
+        if(!RTE_bGet_ButtonHeadlightsStatus() && RTE_u16Get_PhotoRes()>25)
         {
             RTE_vSetHeadlightsState(OFF);
         }
@@ -59,7 +59,7 @@ void ASW_vTaskCheckDriver()
             {
                 RTE_vSetBuzzerOffSecurity();
                 BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
-                if(!RTE_bGet_ButtonHeadlightsStatus())
+                if(!RTE_bGet_ButtonHeadlightsStatus() && RTE_u16Get_PhotoRes()>25)
                 {
                    RTE_vSetHeadlightsState(OFF); 
                 }
@@ -77,7 +77,7 @@ void ASW_vTaskCheckDriver()
 
         RTE_vSetBuzzerOffSecurity();
         
-        if(!RTE_bGet_ButtonHeadlightsStatus())
+        if(!RTE_bGet_ButtonHeadlightsStatus() && RTE_u16Get_PhotoRes()>25)
         {
             RTE_vSetHeadlightsState(OFF); 
         }
