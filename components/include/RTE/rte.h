@@ -99,9 +99,6 @@ bool RTE_bGetBuzzerStatus(void);
 void RTE_vSetBuzzerOnSecurity(void);
 void RTE_vSetBuzzerOffSecurity(void);
 bool RTE_bGetBuzzerStatusSecurity(void);
-//void RTE_vSetHeadLightsOnStatus(void);
-//void RTE_vSetHeadLightsOffStatus(void);
-//bool RTE_bGetHeadLightsStatus(void);
 
 #define OFF false
 #define ON true

@@ -55,16 +55,14 @@ void vTask100ms(void)
 {	
 	/* Send and receive data to the HTML interface -- get and post functions*/
 	COM_vTaskProcessServer();
-	/* Call Shift register functionalty */
-	ASW_vTaskShiftRegControlTest();
 }
  
 void vTask200ms(void)
 {
 	/* Call RGB led functioality */
 	ASW_vTaskRGBLedControlTest();
-	/* Call buzzer functionality */
-	//ASW_vTaskBuzzerTest();
+	/* Call Shift register functionalty */
+	ASW_vTaskShiftRegControlTest();
 }
 
 void vTask500ms(void)
