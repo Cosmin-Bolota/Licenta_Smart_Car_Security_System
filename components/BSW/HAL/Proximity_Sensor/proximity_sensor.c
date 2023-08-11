@@ -39,15 +39,32 @@ void PROX_vRequest(void)
 uint16_t PROX_u16Read(void)
 {
 	PROX_vRequest();
+	uint16_t count = 0;
+	bool ok = 1;
 
-	while (GPIO_iGetLevel(HC_SR04_ECHO_PIN) == 0)
-		;
+	while (GPIO_iGetLevel(HC_SR04_ECHO_PIN) == 0 && ok){
+		count++;
+		if(count >65534){
+			ok = 0;
+		}
+	}
 
 	int64_t echo_start = esp_timer_get_time();
-
-	while (GPIO_iGetLevel(HC_SR04_ECHO_PIN))
-		;
+	if(ok){
+		count = 0;
+	}
+	while (GPIO_iGetLevel(HC_SR04_ECHO_PIN) && ok){
+		count++;
+		if(count >65534){
+			ok = 0;
+		}
+	}
+	if(ok){
+		g_GET_DataStructure.u8Distance = (((esp_timer_get_time() - echo_start) * 0.0343) / 2);
+		return (uint16_t) (((esp_timer_get_time() - echo_start) * 0.0343) / 2);
+	}
+	else{
+		return 0;
+	}
 	
-	g_GET_DataStructure.u8Distance = (((esp_timer_get_time() - echo_start) * 0.0343) / 2);
-	return (uint16_t) (((esp_timer_get_time() - echo_start) * 0.0343) / 2);
 }

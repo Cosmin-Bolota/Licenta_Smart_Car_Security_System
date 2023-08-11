@@ -13,7 +13,6 @@ extern COM_GET_struct g_GET_DataStructure;
 extern COM_POST_struct g_POST_DataStructure;
 
 static bool sg_bIsAlarmOn = false;
-static bool BuzzerStatus = false;
 static bool BuzzerStatusSecurity = false;
 static bool HeadLightsStatus = false;
 
@@ -372,29 +371,14 @@ bool RTE_bGetAlarmStatus(void)
 	return sg_bIsAlarmOn;
 }
 
-void RTE_vSetBuzzerOn(void)
-{
-	BuzzerStatus = true;
-}
-
 void RTE_vSetBuzzerOnSecurity(void)
 {
 	BuzzerStatusSecurity = true;
 }
 
-void RTE_vSetBuzzerOff(void)
-{
-	BuzzerStatus = false;
-}
-
 void RTE_vSetBuzzerOffSecurity(void)
 {
 	BuzzerStatusSecurity = false;
-}
-
-bool RTE_bGetBuzzerStatus(void)
-{
-	return BuzzerStatus;
 }
 
 bool RTE_bGetBuzzerStatusSecurity(void)

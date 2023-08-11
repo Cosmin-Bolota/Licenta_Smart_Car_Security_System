@@ -34,7 +34,8 @@ typedef enum
 	STATE_GREEN_BLUE,
 	STATE_ALL_COLORS
 } rgb_states_t;
-static bool BuzzerStatusSecurity;
+
+static bool BuzzerStatusSecurity; //To know when the alarm activated during the enabled security
 
 bool RTE_bGet_ButtonFanStatus(void);
 bool RTE_bGet_ButtonHonkStatus(void);
@@ -93,9 +94,6 @@ void RTE_vSetAlarmOn(void);
 void RTE_vSetAlarmOff(void);
 bool RTE_bGetAlarmStatus(void);
 
-void RTE_vSetBuzzerOn(void);
-void RTE_vSetBuzzerOff(void);
-bool RTE_bGetBuzzerStatus(void);
 void RTE_vSetBuzzerOnSecurity(void);
 void RTE_vSetBuzzerOffSecurity(void);
 bool RTE_bGetBuzzerStatusSecurity(void);

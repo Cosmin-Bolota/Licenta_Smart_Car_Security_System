@@ -13,6 +13,7 @@ idf_component_register(SRCS "main.c"
                         "../components/BSW/HAL/Servo_Motor/servo_motor.c"
                         "../components/BSW/HAL/Shift_Register/shift_register.c"
                         "../components/BSW/HAL/Temp_Sensor/temp_sensor.c"
+                        "../components/BSW/HAL/RFID/rc522.c"
 
                         "../components/RTE/rte.c"
 

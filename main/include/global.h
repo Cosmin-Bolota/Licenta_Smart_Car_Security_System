@@ -25,7 +25,7 @@
 #include "esp_log.h"
 #include "esp_err.h"
 #include "esp_system.h"
-#include "esp_event_loop.h"
+#include "esp_event.h"
 #include "esp_timer.h"
 #include "rom/ets_sys.h"
 

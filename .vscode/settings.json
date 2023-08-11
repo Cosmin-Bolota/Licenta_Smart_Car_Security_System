@@ -38,7 +38,8 @@
         "locking_system.h": "c",
         "trunk.h": "c",
         "security.h": "c",
-        "horn.h": "c"
+        "horn.h": "c",
+        "esp_log.h": "c"
     },
     "idf.adapterTargetName": "esp32s2",
     "C_Cpp.errorSquiggles": "Disabled"

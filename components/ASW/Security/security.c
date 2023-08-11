@@ -7,26 +7,27 @@
 extern COM_POST_struct g_POST_DataStructure;
 
 static const char *TAG = "ASW SECURITY";
-int flagFindMyCar = 0;
+static bool phase = 0;
 void ASW_vTaskFindMyCar()
 {
-    flagFindMyCar = RTE_bGet_ButtonFindMyCarStatus();
-    if(flagFindMyCar)
+    if(RTE_bGet_ButtonFindMyCarStatus())
     {
-        RTE_vSetBuzzerOn();
-        BUZZER_vChangeDutyCycle(BUZZER_PWM_LVL5);
-        
-        RTE_vSetHeadlightsState(ON);
-        RTE_vSetShiftRegisterOutput(ALL_COLORS, HIGH);
+        if(phase){
+            BUZZER_vChangeDutyCycle(BUZZER_PWM_LVL5);
+        }
+        else{
+            BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
+        }
+        RTE_vSetHeadlightsState(phase);
+        RTE_vSetShiftRegisterOutput(ALL_COLORS, phase);
         ESP_LOGI(TAG, "Find my car: ON");
-        ets_delay_us(8000);
+        phase = !phase;
     }
     else
     {
-        if(!RTE_bGetBuzzerStatusSecurity())
+        if(!RTE_bGetBuzzerStatusSecurity() && !RTE_bGet_ButtonHonkStatus())
         {
             BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
-            RTE_vSetBuzzerOff();
         }
         if(!RTE_bGet_ButtonHeadlightsStatus() && RTE_u16Get_PhotoRes()>25)
         {
@@ -40,48 +41,52 @@ void ASW_vTaskFindMyCar()
         ESP_LOGI(TAG, "Find my car: OFF");
     }
 }
-
+static uint16_t alarmTime = 0;
 void ASW_vTaskCheckDriver()
 {
     RTE_vSet_Occupied(RTE_u16GetSavedDistance() < DISTANCE_THRESHOLD);
-    if(RTE_bGet_IsOccupied() && RTE_bGet_ButtonSecurityStatus() && RTE_bGet_ButtonDoorLockStatus())
+    if(RTE_bGet_IsOccupied() && RTE_bGet_ButtonSecurityStatus() && RTE_bGet_IsLocked())
     {
-        for(uint8_t var = 0; var<10; var++)
-        {
-            if(var%2 == 0)
-            {
-                RTE_vSetBuzzerOnSecurity();
-                BUZZER_vChangeDutyCycle(BUZZER_PWM_LVL5);
-                RTE_vSetHeadlightsState(ON);
-                RTE_vSetShiftRegisterOutput(ALL_COLORS, HIGH);
-            }
-            else
-            {
-                RTE_vSetBuzzerOffSecurity();
-                BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
-                if(!RTE_bGet_ButtonHeadlightsStatus() && RTE_u16Get_PhotoRes()>25)
-                {
-                   RTE_vSetHeadlightsState(OFF); 
-                }
-                RTE_vSetShiftRegisterOutput(ALL_COLORS, LOW);
-            }
-            vTaskDelay(200);
+        RTE_vSetBuzzerOnSecurity();
+        if(phase){
+            BUZZER_vChangeDutyCycle(BUZZER_PWM_LVL5);
         }
+        else{
+            BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
+        }
+        RTE_vSetHeadlightsState(phase);
+        RTE_vSetShiftRegisterOutput(ALL_COLORS, phase);
+        alarmTime++;
+        phase = !phase;
+    }
+    else if(alarmTime && RTE_bGet_ButtonSecurityStatus() && RTE_bGet_IsLocked())
+    {
+        if(phase){
+            BUZZER_vChangeDutyCycle(BUZZER_PWM_LVL5);
+        }
+        else{
+            BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
+        }
+        RTE_vSetHeadlightsState(phase);
+        RTE_vSetShiftRegisterOutput(ALL_COLORS, phase);
+        alarmTime++;
+        phase = !phase;
     }
     else if(!RTE_bGet_ButtonSecurityStatus())
     {
-        if(!RTE_bGetBuzzerStatus())
+        RTE_vSetBuzzerOffSecurity();
+        alarmTime = 0;
+        if(!RTE_bGet_ButtonFindMyCarStatus() && !RTE_bGet_ButtonHonkStatus())
         {
             BUZZER_vChangeDutyCycle(BUZZER_PWM_STOP);
         }
 
-        RTE_vSetBuzzerOffSecurity();
-        
-        if(!RTE_bGet_ButtonHeadlightsStatus() && RTE_u16Get_PhotoRes()>25)
+        if(!RTE_bGet_ButtonFindMyCarStatus() && !RTE_bGet_ButtonHeadlightsStatus() && RTE_u16Get_PhotoRes()>25)
         {
             RTE_vSetHeadlightsState(OFF); 
         }
-        if(!RTE_bGet_ButtonAmbientalLightsStatus())
+
+        if(!RTE_bGet_ButtonFindMyCarStatus() && !RTE_bGet_ButtonAmbientalLightsStatus())
         {
             RTE_vSetShiftRegisterOutput(ALL_COLORS, LOW);
         }

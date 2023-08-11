@@ -3,6 +3,6 @@
 
 #include "global.h"
 
-void ASW_vTaskBuzzerTest(void);
+void ASW_vTaskBuzzer(void);
 
 #endif

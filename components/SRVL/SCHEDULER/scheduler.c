@@ -8,6 +8,7 @@
 #include "BSW/HAL/Com/com.h"
 #include "BSW/HAL/Photo_Resistor/photo_resistor.h"
 #include "BSW/HAL/Temp_Sensor/temp_sensor.h"
+#include "BSW/HAL/RFID/rc522.h"
 
 #include "RTE/rte.h"
 
@@ -26,6 +27,38 @@
 
 static const char *TAG = "SRVL SCHEDULER";
 static httpd_handle_t server = NULL;
+
+uint8_t sk1[5] = {0xe9, 0xe5, 0x97, 0xc1, 0x5a};
+uint8_t sk2[5] = {0xc6, 0xa1, 0xbe, 0x2b, 0xf2};
+
+void tag_handler(uint8_t* sn) { // serial number is always 5 bytes long
+    ESP_LOGI(TAG, "KEY ID : %#x %#x %#x %#x %#x",
+        sn[0], sn[1], sn[2], sn[3], sn[4]
+    );
+	bool ok = 1;
+	for(uint8_t i=0;i<5;i++){
+		if(sn[i]!=sk1[i])
+			ok = 0;
+	}
+	if(!ok){
+		ok = 1;
+		for(uint8_t i=0;i<5;i++){
+		if(sn[i]!=sk2[i])
+			ok = 0;
+		}
+		if(ok){
+			ESP_LOGI(TAG, "Access GRANTED! Key card indentified");
+			RTE_vSet_Locked(0);
+		}
+		else{
+			ESP_LOGI(TAG, "Access DENIED! Key UNKNOWN");
+		}
+	}
+	else{
+		ESP_LOGI(TAG, "Access GRANTED! Key ring indentified");
+		RTE_vSet_Locked(0);
+	}
+}
 
 void SYSTEM_vInit(void)
 {
@@ -49,6 +82,19 @@ void SYSTEM_vInit(void)
 	PWM_vInit();
 	
 	WIFI_vInit(&server);
+
+	const rc522_start_args_t start_args = {
+        .miso_io = 37,
+        .mosi_io = 35,
+        .sck_io  = 36,
+        .sda_io  = 34,
+        .callback = &tag_handler,
+
+        // Uncomment next line for attaching RC522 to SPI2 bus. Default is VSPI_HOST (SPI3)
+        .spi_host_id = HSPI_HOST
+    };
+
+    rc522_start(start_args);
 }
 
 void vTask100ms(void)
@@ -59,29 +105,23 @@ void vTask100ms(void)
  
 void vTask200ms(void)
 {
-	/* Call RGB led functioality */
-	ASW_vTaskRGBLedControlTest();
-	/* Call Shift register functionalty */
-	ASW_vTaskShiftRegControlTest();
+
 }
 
 void vTask500ms(void)
 {
-	//ASW_vTaskServoTest();	//Trunk
-	ASW_vTaskBuzzerTest();	//Honk
-	/* Call DC motor in the Left side */
-	ASW_vTaskDCMsTest();
-	/* Call DC motor in the Right side */
-	ASW_vTaskDCMdTest();
+	ASW_vTaskBuzzer();	//Honk
+	
 	/* Call proximity sensor functionality */
 	PROX_u16Read();			//Distance
-
+	
 	ASW_vTaskTrunkCheck();
 }
 
 void vTask800ms(void)
 {
 	ASW_vTaskAmbientalLight();
+	
 	/* Call Find my car functionality */
 	ASW_vTaskFindMyCar();
 } 
@@ -90,8 +130,11 @@ void vTask1000ms(void)
 {
 	/* Calculate the photoresistor returned value */
 	PHRES_vTaskCalculate();
+	
 	ASW_vTaskHeadLightControl();
+	
 	ASW_vTaskFanTempTreshold();
+	
 	ASW_vTaskDoorLockCheck();
 } 
 
@@ -116,43 +159,45 @@ void SYSTEM_vTaskScheduler(void)
 		if (u16TickCount % TASK_100MS == 0)
 		{
 			vTask100ms();
-			vTaskDelay(5);
+			
+			
 		}
 
 		if (u16TickCount % TASK_200MS == 0)
 		{
 			vTask200ms();
-			vTaskDelay(5);
+			
+			
 		}
 
 		if (u16TickCount % TASK_500MS == 0)
 		{
 			vTask500ms();	
-			vTaskDelay(5);
+			
 		}
 		
 		if (u16TickCount % TASK_800MS == 0)
 		{
 			vTask800ms();
-			vTaskDelay(5);
+			
 		}
 
 		if (u16TickCount % TASK_1000MS == 0)
 		{
 			vTask1000ms();
-			vTaskDelay(5);	
+			
 		}
 
 		if (u16TickCount % TASK_2000MS == 0)
 		{
 			vTask2000ms();	
-			vTaskDelay(5);
+			
 		}
 
 		if (u16TickCount % TASK_5000MS == 0)
 		{
 			vTask5000ms();
-			vTaskDelay(5);
+			
 		}
 
 		u16TickCount++;
