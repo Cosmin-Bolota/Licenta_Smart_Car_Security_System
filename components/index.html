@@ -341,8 +341,8 @@
 				/********** Door **********/
 				bttnName: "buttonFormDoor", // form Name
 				lsItemName: "valueDoor", // localStorage
-				lsTextOn: "Door Locked",
-				lsTextOff: "Door Unlocked",
+				lsTextOn: "Door Locked", //Btn Text On
+				lsTextOff: "Door Unlocked", //Btn Text Off
 				specialReq: true,
 				reqDataOn: "button=Lock+Door",
 				reqDataOff: "button=Unlock+Door"
@@ -392,9 +392,15 @@
 			const buttonPressed = e.target.id;
 			const button = buttons.find(x => x.bttnName == buttonPressed);
 
-			if (localStorage.getItem(button.lsItemName) === `${button.lsText} On`) {
-				localStorage.setItem(button.lsItemName, `${button.lsText} Off`);
-
+			if ((localStorage.getItem(button.lsItemName) === `${button.lsText} On`) || (localStorage.getItem(button.lsItemName) === `${button.lsTextOn}`)) {
+				if(`${button.lsText}` === "undefined")
+				{
+					localStorage.setItem(button.lsItemName, `${button.lsTextOff}`);
+				}
+				else{
+					localStorage.setItem(button.lsItemName, `${button.lsText} Off`);
+				}
+				
 				if (button.specialReq != null) {
 					SendRequest(button.reqDataOff);
 
@@ -405,7 +411,13 @@
 				}
 			}
 			else {
-				localStorage.setItem(button.lsItemName, `${button.lsText} On`);
+				if(`${button.lsText}` === "undefined")
+				{
+					localStorage.setItem(button.lsItemName, `${button.lsTextOn}`);
+				}
+				else{
+					localStorage.setItem(button.lsItemName, `${button.lsText} On`);
+				}
 
 				if (button.specialReq != null) {
 					SendRequest(button.reqDataOn);
@@ -447,6 +459,7 @@
 			document.getElementById("distance").innerHTML = "Distance" + "<br>" + localStorage.getItem("DataValue6") + " cm";
 		}
 
+		var tp = localStorage.getItem("DataValue4");
 		function updateData() {
 			let request = new XMLHttpRequest();
 			request.onreadystatechange = function () {
@@ -460,6 +473,28 @@
 					localStorage.setItem("DataValue5", DataValue[5]);
 					localStorage.setItem("DataValue6", DataValue[6]);
 					displayData();
+				}
+				
+				const button = buttons.find(x => x.lsItemName == "valueDoor");
+				if(tp != localStorage.getItem("DataValue4")){
+					if(((DataValue[4])  === "locked" && localStorage.getItem("valueDoor") === "Door Unlocked") || ((DataValue[4]) === "unlocked" ) && (localStorage.getItem("valueDoor") === "Door Locked" ))
+					{
+						document.getElementById("buttonSubmitDoor").click();
+						console.log("Butonul si statusul NU sunt sincronizate!");
+						console.log(localStorage.getItem("DataValue4"));
+						console.log(localStorage.getItem(button.lsItemName));
+					}
+					
+					else
+					{
+						console.log("Butonul si statusul sunt sincronizate!");
+						console.log(localStorage.getItem("DataValue4"));
+						console.log(localStorage.getItem(button.lsItemName));
+					}
+					console.log("Statusul si statusul vechi NU sunt sincronizate!");
+					tp = localStorage.getItem("DataValue4");
+					console.log(localStorage.getItem("DataValue4"));
+					console.log(localStorage.getItem(button.lsItemName));
 				}
 			};
 			request.open('GET', '/data.txt', true);

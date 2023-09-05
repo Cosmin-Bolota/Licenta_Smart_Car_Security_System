@@ -125,7 +125,7 @@ httpd_handle_t WebPageStart(void)
 		return server;
 	}
 
-	ESP_LOGI(TAG, "Error starting server!");
+	ESP_LOGE(TAG, "Error starting server!");
 
 	return NULL;
 }
@@ -173,7 +173,7 @@ void WIFI_vInit(void *arg)
 	}
 	if (strlen(ESP_PASS_AP) < 8)
 	{
-		ESP_LOGI(TAG, "Password %s is too short", ESP_PASS_AP);
+		ESP_LOGE(TAG, "Password %s is too short", ESP_PASS_AP);
 	}
 
 	/* Set mode to AP */

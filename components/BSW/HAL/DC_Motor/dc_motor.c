@@ -46,7 +46,7 @@ void DCMOT_vChangeSpeed(uint32_t u32DCMotorSpeed)
 	}
 	else
 	{
-		ESP_LOGI(TAG, "Invalid value");
+		ESP_LOGE(TAG, "Invalid value");
 	}
 }
 
@@ -92,6 +92,6 @@ void DCMOT_vChangeSpeedReverse(uint32_t u32DCMotorSpeed)
 	}
 	else
 	{
-		ESP_LOGI(TAG, "Invalid value");
+		ESP_LOGE(TAG, "Invalid value");
 	}
 }

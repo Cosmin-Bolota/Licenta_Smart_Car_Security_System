@@ -4,4 +4,5 @@
 #include "global.h"
 
 void ASW_vTaskDoorLockCheck();
+void LOCK_vInit();
 #endif

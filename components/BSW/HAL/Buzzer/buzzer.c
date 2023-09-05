@@ -42,6 +42,6 @@ void BUZZER_vChangeDutyCycle(uint32_t u32BuzzerDutyCycle)
 	}
 	else
 	{
-		ESP_LOGI(TAG, "Invalid value");
+		ESP_LOGW(TAG, "Invalid value");
 	}
 }

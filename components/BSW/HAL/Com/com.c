@@ -195,7 +195,7 @@ void COM_vProcessPostRequest(void)
 
 		else
 		{
-			ESP_LOGI(TAG, "Not known");
+			ESP_LOGE(TAG, "Not known");
 		}
 
 		g_bPOSTRequestInProcess = false;

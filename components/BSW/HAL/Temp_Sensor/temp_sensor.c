@@ -167,7 +167,7 @@ DHT11_struct DHT11_dht11Read(void)
 
 	if (DHT11_i8Response() != DHT11_OK)
 	{
-		ESP_LOGI(TAG, "Response TIMEOUT!");
+		ESP_LOGW(TAG, "Response TIMEOUT!");
 	}
 
 	for (u8Index = 0; u8Index < 5; u8Index++)
@@ -176,7 +176,7 @@ DHT11_struct DHT11_dht11Read(void)
 
 		if (i8DHT11_array[u8Index] == DHT11_TIMEOUT)
 		{
-			ESP_LOGI(TAG, "Data TIMEOUT!");
+			ESP_LOGW(TAG, "Data TIMEOUT!");
 		}
 	}
 
@@ -191,7 +191,7 @@ DHT11_struct DHT11_dht11Read(void)
 			+ dht11Data.u8IntegralTemp + dht11Data.u8DecimalTemp)
 			!= dht11Data.u8CheckSum)
 	{
-		ESP_LOGI(TAG, "ERROR at checksum");
+		ESP_LOGW(TAG, "ERROR at checksum");
 		dht11Data.u8CheckSum = 0;
 	}
 
@@ -221,7 +221,7 @@ void DHT11_vTaskTempAndHumCalculate(void)
 	}
 	else
 	{
-		ESP_LOGI(TAG, "ERROR at COM");
+		ESP_LOGW(TAG, "ERROR at COM");
 	}
 
 	ESP_LOGI(TAG, "Hum Int: %d", dht11Data.u8IntegralHum);

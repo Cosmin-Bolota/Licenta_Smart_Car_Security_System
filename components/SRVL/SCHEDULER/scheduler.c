@@ -28,38 +28,6 @@
 static const char *TAG = "SRVL SCHEDULER";
 static httpd_handle_t server = NULL;
 
-uint8_t sk1[5] = {0xe9, 0xe5, 0x97, 0xc1, 0x5a};
-uint8_t sk2[5] = {0xc6, 0xa1, 0xbe, 0x2b, 0xf2};
-
-void tag_handler(uint8_t* sn) { // serial number is always 5 bytes long
-    ESP_LOGI(TAG, "KEY ID : %#x %#x %#x %#x %#x",
-        sn[0], sn[1], sn[2], sn[3], sn[4]
-    );
-	bool ok = 1;
-	for(uint8_t i=0;i<5;i++){
-		if(sn[i]!=sk1[i])
-			ok = 0;
-	}
-	if(!ok){
-		ok = 1;
-		for(uint8_t i=0;i<5;i++){
-		if(sn[i]!=sk2[i])
-			ok = 0;
-		}
-		if(ok){
-			ESP_LOGI(TAG, "Access GRANTED! Key card indentified");
-			RTE_vSet_Locked(0);
-		}
-		else{
-			ESP_LOGI(TAG, "Access DENIED! Key UNKNOWN");
-		}
-	}
-	else{
-		ESP_LOGI(TAG, "Access GRANTED! Key ring indentified");
-		RTE_vSet_Locked(0);
-	}
-}
-
 void SYSTEM_vInit(void)
 {
     /* Call these functions only when specific HW parts are connected */
@@ -83,18 +51,7 @@ void SYSTEM_vInit(void)
 	
 	WIFI_vInit(&server);
 
-	const rc522_start_args_t start_args = {
-        .miso_io = 37,
-        .mosi_io = 35,
-        .sck_io  = 36,
-        .sda_io  = 34,
-        .callback = &tag_handler,
-
-        // Uncomment next line for attaching RC522 to SPI2 bus. Default is VSPI_HOST (SPI3)
-        .spi_host_id = HSPI_HOST
-    };
-
-    rc522_start(start_args);
+	LOCK_vInit();
 }
 
 void vTask100ms(void)
@@ -116,14 +73,13 @@ void vTask500ms(void)
 	PROX_u16Read();			//Distance
 	
 	ASW_vTaskTrunkCheck();
+
+	ASW_vTaskDoorLockCheck();
 }
 
 void vTask800ms(void)
 {
 	ASW_vTaskAmbientalLight();
-	
-	/* Call Find my car functionality */
-	ASW_vTaskFindMyCar();
 } 
 
 void vTask1000ms(void)
@@ -134,8 +90,9 @@ void vTask1000ms(void)
 	ASW_vTaskHeadLightControl();
 	
 	ASW_vTaskFanTempTreshold();
-	
-	ASW_vTaskDoorLockCheck();
+
+	/* Call Find my car functionality */
+	ASW_vTaskFindMyCar();
 } 
 
 void vTask2000ms(void)

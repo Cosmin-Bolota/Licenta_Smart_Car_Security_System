@@ -59,7 +59,6 @@ void GPIO_vInit(void)
 	sg_gpio_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
 	sg_gpio_config.intr_type = GPIO_INTR_DISABLE;
 	ESP_ERROR_CHECK(gpio_config(&sg_gpio_config));
-
 }
 
 void GPIO_vSetDirection(uint8_t u8PinNumber, uint8_t u8Direction)

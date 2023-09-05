@@ -36,6 +36,11 @@ bool RTE_bGet_ButtonDoorLockStatus(void)
 	return g_POST_DataStructure.bButtonDoorLock;
 }
 
+void RTE_bGet_vSet_ButtonDoorLockStatus(bool cheat)
+{
+	g_POST_DataStructure.bButtonDoorLock = cheat;
+}
+
 uint8_t RTE_u8Get_UserTemperature(void)
 {
 	return g_POST_DataStructure.u8UserTemperature;
@@ -206,7 +211,7 @@ void RTE_vSetLockLightState(uint8_t u8Light)
 	}
 	else
 	{
-		ESP_LOGI(TAG, "Invalid relay level");
+		ESP_LOGW(TAG, "Invalid relay level");
 	}
 }
 
@@ -266,7 +271,7 @@ void RTE_vSetAmbientalLightsState(bool bState)
 			s_u8ColorState = STATE_RED;
 			break;
 		default:
-			ESP_LOGI(TAG, "RGB ERROR");
+			ESP_LOGW(TAG, "RGB ERROR");
 			break;
 		}
 	}
@@ -277,7 +282,7 @@ void RTE_vSetAmbientalLightsState(bool bState)
 	}
 	else
 	{
-		ESP_LOGI(TAG, "AMBIENTAL LIGHTS ERROR");
+		ESP_LOGW(TAG, "AMBIENTAL LIGHTS ERROR");
 	}
 }
 
@@ -326,7 +331,7 @@ void RTE_vSetRGBLedState()
 	}
 	else
 	{
-		ESP_LOGI(TAG, "AMBIENTAL LIGHTS ERROR");
+		ESP_LOGW(TAG, "AMBIENTAL LIGHTS ERROR");
 	}
 }
 
@@ -345,7 +350,7 @@ void RTE_vSetShiftRegisterOutput(shift_register_positions_t u8ComponentMask, boo
 	}
 	else
 	{
-		ESP_LOGI(TAG, "Invalid level for shift register");
+		ESP_LOGW(TAG, "Invalid level for shift register");
 	}
 
 	SHIFTREG_vOutput8Bits(s_u8CurrentData);

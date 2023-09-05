@@ -38,6 +38,6 @@ void SERVO_vChangeAngle(uint32_t ServoAngle)
         ESP_LOGI(TAG, "ServoAngle == 180");
     }
     else
-        ESP_LOGI(TAG, "Invalid value");
+        ESP_LOGE(TAG, "Invalid value");
 
 }

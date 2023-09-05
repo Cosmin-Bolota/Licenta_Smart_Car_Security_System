@@ -63,6 +63,10 @@ int GPIO_iGetLevel(uint8_t u8PinNumber);
 #define DHT11_PIN 7
 #define DHT11_PIN_MASK (1 << DHT11_PIN)
 
+/* RFID_RC522_HW */
+#define RC522_RST_PIN 19
+#define RC522_RST_PIN_MASK (1 << RC522_RST_PIN)
+
 /* SHIFT_REGISTER_HW */
 #define SN74HC595N_DS_PIN 2
 #define SN74HC595N_DS_PIN_MASK (1 << SN74HC595N_DS_PIN)

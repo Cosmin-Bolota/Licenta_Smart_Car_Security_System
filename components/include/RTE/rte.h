@@ -41,6 +41,7 @@ bool RTE_bGet_ButtonFanStatus(void);
 bool RTE_bGet_ButtonHonkStatus(void);
 bool RTE_bGet_ButtonSecurityStatus(void);
 bool RTE_bGet_ButtonDoorLockStatus(void);
+void RTE_bGet_vSet_ButtonDoorLockStatus(bool cheat);
 uint8_t RTE_u8Get_UserTemperature(void);
 
 bool RTE_bGet_ButtonTrunkStatus(void);
