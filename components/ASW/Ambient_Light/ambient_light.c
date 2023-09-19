@@ -6,11 +6,10 @@ static const char *TAG = "ASW AL";
 
 void ASW_vTaskAmbientalLight(void)
 {
-	if(!RTE_bGet_ButtonSecurityStatus())
+	if(!RTE_bGet_ButtonSecurityStatus() || !RTE_bGet_ButtonFindMyCarStatus())
 	{
 		if(RTE_bGet_ButtonAmbientalLightsStatus())
 		{
-			
 			RTE_vSetAmbientalLightsState(ON);
 		}
 		else{

@@ -7,7 +7,7 @@
 extern COM_POST_struct g_POST_DataStructure;
 
 static const char *TAG = "ASW SECURITY";
-static bool phase = 0;
+static bool phase = 1;
 void ASW_vTaskFindMyCar()
 {
     if(RTE_bGet_ButtonFindMyCarStatus())
@@ -38,6 +38,7 @@ void ASW_vTaskFindMyCar()
         {
             RTE_vSetShiftRegisterOutput(ALL_COLORS, LOW);
         }
+        phase = 1;
         ESP_LOGI(TAG, "Find my car: OFF");
     }
 }
